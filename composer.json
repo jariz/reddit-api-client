@@ -1,7 +1,7 @@
 {
 
-  "name": "h2s/reddit-api-client",
-  "description": "Provides an interface to the API at reddit.com",
+  "name": "jariz/reddit-api-client",
+  "description": "Modified version of h2s' reddit-api-client for my bots",
   "keywords": [
     "reddit",
     "api",
