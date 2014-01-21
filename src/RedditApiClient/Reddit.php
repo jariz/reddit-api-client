@@ -194,6 +194,33 @@ class Reddit
 
         return $link;
     }
+	
+	public function getComments($uri, $limit=25, $after="", $before="",$time="",$sort="") {
+        $verb = "GET";
+        $url = "http://www.reddit.com/{$uri}.json?limit=".$limit;
+
+        if(!empty($after)) $url .= "&after={$after}";
+        if(!empty($before)) $url .= "&before={$before}";
+        if(!empty($time)) $url .= "&t={$time}";
+        if(!empty($sort)) $url .= "&sort={$sort}";
+
+        $response = $this->sendRequest($verb, $url);
+
+        if (isset($response['data']['children'])) {
+
+            foreach ($response['data']['children'] as $data) {
+
+                $comment = new Comment($this);
+                $comment->setData($data['data']);
+
+                if (isset($comment['author'])) {
+                    $comments[] = $comment;
+                }
+            }
+        }
+
+        return !isset($comments) || $comments == null ? array() : $comments;
+    }
 
     /**
      * Fetches and returns a user account
